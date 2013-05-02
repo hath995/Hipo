@@ -1,0 +1,21 @@
+#Purpose
+I'm posting this as a sample of my PHP code. It was written for a large legacy framework.  
+
+#General Description
+It the page editor I mentioned in my resume. It is fairly decoupled from the rest of the framework and I wrote all of it with the exception of a few code snippets which are marked. It is a work in progress. There is a lot of stuff that remains unfinished and other parts that could be refactored. I'll go ahead and say that there are definitely functions that are too long, lines that are quite long, and contains a few reinvented wheels. I haven't made many changes to it for sometime now because of other priorities but it has hardly had any bugs show up in that time either. I think I wrote the first version several years ago so I've learned a bit since then.
+
+Essentially what I'm getting at is that I know the code is not perfect but I am still fairly proud of it. The coworkers who use it have all given it high praise for usability. It has gone through a couple different name changes. I originally called it the page editor and then because my boss wanted an acronym we called it the Healthy Infant Page Organizer (HIPO). Healthy infant was the the project it was originally made for but it has since been applied to all of our other projects.
+
+The editor is has a work flow of creating a stub and then editing that stub.
+For example to make a new level you click "add level" then click on the level in the select menu then click "rename level" for a prompt to rename it. The creation of sections and pages follow the same pattern. The pages have considerably larger number of properties to edit than levels or section.
+
+The level visualizer down at the bottom uses html 5's canvas to give a picture of structure of the level doubly linked list. Any errors or orphaned pages show up there. Even though I wrote the page editor there are still some folks who edit the pages manually so it is very handy to see when mistakes have been made.x
+
+I've included the sql for the level, section, page, and question tables in the doc folder. I have included a document I made explaining the page organization scheme written for entering content by hand. It was written before I wrote the page editor and the content providers were doing data entry via access. It is still a good explanation of the system. The table schema and the page linking system was created by my coworker. There is also a class diagram in there as well.
+
+Our server was an older version of php (5.1) and for some reason when it was set up the JSON library was not included in the use flags when it was compiled. It has stayed that way ever since. That is why a lot of the code has custom built json strings. When i refactored I started to use a local copy of a json encode and decode functions but ideally in the future it should be the real thing and all functions should use the function instead of the custom string building.
+
+The other thing to mention is that this framework isn't MVC. I think that should be fairly obvious when you look at it. I do however have experience with ORMs. This code, for historical reasons, just doesn't use one.
+
+#Refactoring
+I think first and foremost it was a large project which had multiple parts and needed flexibility for the future. That fact eventually drove me to learn more about object oriented design. That resulted in a system which allowed me to make a small framework that could be extended upon. It really drove home the idea of programming to an interface as well. I was tired of every function having its own custom response format for success or failure. In the refactoring I really only fixed the latter mostly but I felt it was important to make an incremental step. It was a pretty major overhaul and it required fixing every function twice essentially (once for the backend and once for the frontend). The other essential feature of the refactor was to make new features to the editor easy to add. Now if someone were to try all they would need to do is create a class inheriting the Decorator pattern and then implement the inherited abstract functions and write some javascript to work with the new content. They then would change only one line in the original code to add the decorator to the constructor of the Level object.

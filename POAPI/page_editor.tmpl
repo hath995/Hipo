@@ -1,0 +1,186 @@
+<patTemplate:tmpl name="page_editor">
+<html>
+<head>
+<title>{PROJECT_NAME}{LANGUAGE}{PATHWAY} Pages Super Editor</title>
+<meta http-equiv='Content-Type' content='text/html;charset=utf-8' />
+<script type="text/javascript" src="js/php.default.min.js"></script>
+<script type="text/javascript" src="js/sort.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="../POAPI/page_editor.js"></script>
+<script type="text/javascript" src="../POAPI/dv.js"></script>
+{DECORATOR_SCRIPTS}
+<style>
+.error {
+background:#FBE3E4;
+color:#D12F19;
+border:2px solid;
+border-color:#FBC2C4;
+padding:6px;
+}
+
+.success {
+background:#E6EFC2;
+color:#529214;
+border:2px solid;
+border-color:#C6D880;
+padding:6px;
+}
+</style>
+</head>
+<body>
+<div name="container" style="width: 1024px; min-width:1024px; margin: 0 auto;">
+<h1>{PROJECT_NAME}{LANGUAGE}{PATHWAY} Pages Super Editor</h1>
+{PATHWAY_LINKS}
+	<form id='page_edit' name='page_edit'>
+	<div name="navigation" id="navigation" style="clear:both;">
+		<div name="dheader_flash" id="dheader_flash">
+		</div>
+		<table style="float:left">
+			<tr>
+				<td><select style="width:100%" name="n_level" id="n_level" size="10">
+				{LEVELS}
+				
+				</select style="width:100%" ></td>
+				<td><!--<input type="button" value="Level Up"><br><input type="button" value="Level Down">--></td>
+				<td><select style="width:100%"  id="n_section"  size="10"><option value="">Empty</option></select style="width:100%" ></td>
+				<!--<td><input type="button" value="Section Up" id="bmoveu_section"><br><input type="button" value="Section Down" id="bmoved_section"></td>-->
+				<!--<td><select style="width:100%"  id="n_subsection"  size="10"><option value="">Empty</option></select style="width:100%" ></td>
+				<td><input type="button" value="Subsection Up"><br><input type="button" value="Subsection Down"></td>-->
+				<td><select style="width:100%"  id="hipage" name="hipage" size="10"><option value="">Empty</option></select style="width:100%" ></td>
+				<td><input type="button" value="Page Up" class="nyi"><br>
+					<input type="button" value="Page Down" class="nyi"><br><br>
+					<input type="button" value="Add Page After" name="baddpageafter" id="baddpageafter">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="button" value="Rename Level" id="brename_level" name="brename_level"><br>
+					<input type="button" value="Add Level" id="badd_level" name="badd_level"><br>
+					<input type="button" value="Reorder Level" id="breorder_level" name="breorder_level"><br>
+				</td>
+				<td></td>
+				<td>
+					<input type="button" value="Rename Section" id="brename_section" name="brename_section"><br>
+					<input type="button" value="Add Section" id="badd_section" name="badd_section"><br>
+					<input type="button" value="Delete Section" id="bdelete_section" name="bdelete_section"><br></td>
+				<td></td>
+				<!--<td><input type="button" value="Add Subsection"><br><input type="button" value="Delete Subsection"><br></td>
+				<td></td>-->
+				<td>
+					<input type="button" value="Add Page" id="badd_page" name="badd_page"><br><br><br>
+					<input type="button" value="Delete Page" id="bdelete_page" name="bdelete_page"><br></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+	<div style="clear:both;" name="dlevel_flash" id="dlevel_flash">
+	</div>
+	<div name="page_props">
+		
+		<fieldset>
+		<legend>Page</legend>
+			<fieldset>
+			<legend>Page Navigation</legend>
+			<table>
+				<tr><td>
+					<input type="hidden" id="p_idx" name="p_idx">
+					Level <input type="text" id="p_level" name="p_level"></br>
+					Section <input type="text" id="p_section" name="p_section"></br>
+					Page Number <input type="text" id="p_pnum" name="p_pnum"></br>
+				</td></tr>
+				<tr><td>
+					From <input type="text" id="p_from" name="p_from"> Next <input type="text" id="p_next" name="p_next">
+				</td></tr>
+				<tr><td>
+					Left Nav <input type="checkbox" id="p_lnav" name="p_lnav"><br	>
+					Section Final Page <input type="checkbox" id="p_sfp" name="p_sfp">
+				</td></tr>
+				<tr><td>
+					Page Type <select id="p_type" name="p_type"><option value=""></option><option value="audio">audio</option><option value="video">video</option><option value="recordvid">recordvid</option><option value="playvid">playvid</option><option value="recordreflection">recordreflection</option><option value="query">query</option></select> Title<input type="text" id="p_title" name="p_title">
+				</td></tr>
+			</table>
+			</fieldset>
+			<fieldset>
+			<legend>Page Content</legend>
+			<div id="content" name="content">
+			<div style="float:left;">Content<br><textarea id="p_content" name="p_content" cols="60" rows="20" style="margin-right: 10px;"></textarea></div>
+				<div style="float:left;">
+				HTML Preview<br>
+				<div style="border: 1px solid black; min-width: 500px; min-height: 300px;" id="hpreview" name="hpreview"></div>
+				</div>
+				<div style="float: clear both;">
+				<label for="p_video">Video Media:</label>
+				<input type="text" id="p_video" name="p_video">
+				<br>
+				<label for="p_picture">Picture Media:</label>
+				<input type="text" id="p_picture" name="p_picture">
+				</div>
+			</div>
+			
+			<!--<table>
+				<tr>
+				</tr>
+			</table>-->
+			<div style="clear: both;">
+				Page Notes<br>
+				<textarea id="p_notes"></textarea>
+				<input type="button" id="p_submit" name="p_submit" value="Submit Page">
+				</div>
+				<div name="dpage_flash" id="dpage_flash">
+					<div class="success" style="display:none;">Success!</div>
+				</div>
+			<div style="clear:both;">
+			
+			<br>
+			Questions<br>
+				<div id="questionlist" style="float:left">
+				<select size="10" id="p_questions" name="p_questions" style="width: 100%"><option value="">Empty</option></select><br>
+					<input type="button" value="Add Question" name="badd_question" id="badd_question"><br><br>
+					<input type="button" value="Delete Question" name="bdelete_question" id="bdelete_question">
+				</div>
+				<div id="questionnav">
+					<table id="tqtable">
+						<tr>
+							<input type="hidden" id="q_id" name="q_id">
+							<td>Question Number</td><td> <input type="text" id="q_num" name="q_num"></td>
+							<td>Question Type</td><td> <select id="q_type" name="q_type">
+							<option value=""></option>
+							<option value="tx">Text box entry</option>
+							<option value="ra">Radio button group</option>
+							<option value="ck">Checkbox</option>
+							</select></td>
+						</tr>
+						<tr id="question_second_column">
+							<td>Question Label</td><td><input type="text" id="q_label" name="q_label"></td>
+						</tr>
+						<tr>
+							<td>Question Text</td><td><textarea id="q_text" name="q_text" cols="40" rows="4"></textarea></td
+						</tr>
+						<tr>
+							<td>Question Options</td><td><textarea id="q_options" name="q_options" cols="40" rows="4"></textarea></td>
+						</tr>
+						<tr>
+							<td>Correct Responses</td><td><textarea id="q_correct" name="q_correct"></textarea></td>
+						</tr>
+					</table>
+				</div>
+				
+				<br>
+				<input type="button" id="bsubmit_question" name="bsubmit_question" value="Submit Question">
+				<div name="dquestion_flash" id="dquestion_flash">
+					<div class="success" style="display:none;">Success!</div>
+				</div>
+			</div>
+			</fieldset>
+			<div id="sb" style="width:600; height: 400; overflow:scroll; float:left;">
+			<canvas id="can" name="can" height="400" width="600" style=""></canvas>
+			</div>
+			<img style="float:left;" src="../POAPI/dvlegend.gif">
+		</fieldset>
+		
+	</div>
+	</form>
+</div>
+</body>
+</html>
+</patTemplate:tmpl>
